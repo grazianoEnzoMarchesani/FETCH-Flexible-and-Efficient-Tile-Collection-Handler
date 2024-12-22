@@ -1,74 +1,86 @@
-# Fetch
+# LCZ Classifier
 
-TileFetch is a web application that allows users to select an area on a map, generate API links using the Google Solar API, and download the corresponding tiles (DSM, RGB, MASK) in a compressed ZIP file. The application provides a user-friendly interface, progress tracking, and detailed instructions for ease of use.
+LCZ Classifier is a project that automates the classification of Local Climate Zones (LCZ) using geospatial data. The process begins with satellite data acquisition through the Google Solar API and continues with a series of QGIS processing steps for LCZ classification.
 
 ## Features
 
-- **Interactive Map**: Use Leaflet.js to select an area by drawing a rectangle.
-- **API Key Input**: Easily enter your Google API Key.
-- **Generate Links**: Automatically generate API links for the selected area.
-- **Download Tiles**: Download DSM, RGB, and MASK tiles as a ZIP file.
-- **Progress Tracking**: Monitor download progress with a progress bar.
-- **Loader Animation**: Visual indication while files are being downloaded.
-- **Tooltips**: Contextual instructions for interactive elements.
-- **Responsive Design**: Works well on both desktop and mobile devices.
+- **Data Acquisition**: Web interface for downloading DSM, RGB and MASK tiles via Google Solar API
+- **Automated Processing**: Series of Python scripts for QGIS that process data sequentially
+- **LCZ Parameter Calculation**: Analysis of:
+  - Sky View Factor
+  - Aspect Ratio
+  - Building Surface Fraction
+  - Impervious/Pervious Surface Fraction
+  - Height of Roughness Elements
+  - Terrain Roughness Class
+  - Surface Admittance
+  - Surface Albedo
+  - Anthropogenic Heat Output
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
+- QGIS 3.x
+- Python 3.x
+- Google API Key for Google Solar API
+- Python Libraries:
+  - NumPy
+  - Statsmodels
+  - PyQt5
 
-- **Google API Key**: You will need a Google API key to use the Google Solar API. You can get your API key from the Google Cloud Console.
+## Installation
+
+1. Clone the repository
+2. Open index.html in browser for the data download interface
+3. Import Python scripts into QGIS
 
 ## Usage
 
-### Instructions
+### 1. Data Acquisition
+- Open index.html
+- Draw an area on the map
+- Enter your Google API Key
+- Generate API links and download tiles
 
-1. **Draw a Rectangle on the Map**:
+### 2. QGIS Processing
+Execute the scripts in the following order:
 
-   - Click on the rectangle icon in the top left corner of the map.
-   - Click and drag on the map to create a rectangle around the area of interest.
-2. **Enter Your API Key**:
+1. `00_import_raster_files.py`: Import downloaded raster files
+2. `01_make_grid.py`: Create analysis grid
+3. `02_make_buildings.py`: Extract buildings
+4. `03_make_pervius_1.py`: Pervious surfaces analysis (part 1)
+5. `04_make_pervius_2.py`: Pervious surfaces analysis (part 2)
+6. `05_make_dtm.py`: Generate digital terrain model
+7. `05_median_distance.py`: Calculate median distances
+8. `05_mediana_altezze.py`: Calculate median heights
+9. `06_make_h.py`: Calculate height of roughness elements
+10. `07_aspect_ratio.py`: Calculate aspect ratio
+11. `08_refine_albedo.py`: Refine albedo values
+12. `09_rmsep.py`: Calculate and classify LCZs
 
-   - Enter your Google API Key in the input box labeled "Enter your API key".
-   - You can get your API key from the Google Cloud Console.
-3. **Generate API Links**:
+## Project Structure
 
-   - Click the "Generate API Links" button to generate the API links for the selected area.
-   - The generated links will be displayed in the textarea below.
-4. **Download Tiles**:
-
-   - Click the "Download Tiles" button to start downloading the tiles.
-   - The progress of the download will be shown in the progress bar.
-   - Once completed, a ZIP file containing the tiles will be downloaded to your computer.
-
-### Screenshots
-
-#### Main Interface
-
-#### Progress Bar
-
-## Technologies Used
-
-- **HTML/CSS**: For structure and styling.
-- **JavaScript**: For functionality and interaction.
-- **Leaflet.js**: For the interactive map.
-- **Leaflet Draw**: For drawing rectangles on the map.
-- **Leaflet Control Geocoder**: For geocoding and address search.
-- **JSZip**: For creating ZIP files.
-- **FileSaver.js**: For saving files to the user's computer.
+- `index.html`: Web interface for data download
+- `scripts/`: Directory containing numbered Python scripts
+- `docs/`: Additional documentation
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a branch for your changes
+3. Submit a pull request
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is distributed under the MIT license. See the `LICENSE` file for details.
+
+## Authors
+
+- [Your name]
 
 ## Acknowledgements
 
-- [Leaflet.js](https://leafletjs.com/)
-- [Leaflet Draw](https://github.com/Leaflet/Leaflet.draw)
-- [Leaflet Control Geocoder](https://github.com/perliedman/leaflet-control-geocoder)
-- JSZip
-- [FileSaver.js](https://github.com/eligrey/FileSaver.js/)
+- Google Solar API
+- QGIS Development Team
+- Leaflet.js and contributors
