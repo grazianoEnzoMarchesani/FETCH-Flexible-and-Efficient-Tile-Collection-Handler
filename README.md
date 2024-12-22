@@ -75,9 +75,6 @@ Contributions are welcome! Please:
 
 This project is distributed under the MIT license. See the `LICENSE` file for details.
 
-## Authors
-
-- [Your name]
 
 ## Acknowledgements
 
