@@ -1,4 +1,4 @@
-# LCZ Classifier
+# FETCH: Framework for Environmental Type Classification Hub - LCZ Classifier
 
 LCZ Classifier is a project that automates the classification of Local Climate Zones (LCZ) using geospatial data. The process begins with satellite data acquisition through the Google Solar API and continues with a series of QGIS processing steps for LCZ classification.
 
