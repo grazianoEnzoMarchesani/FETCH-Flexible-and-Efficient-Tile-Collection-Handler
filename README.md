@@ -43,19 +43,20 @@ LCZ Classifier is a project that automates the classification of Local Climate Z
 
 ### 2. QGIS Processing
 Execute the scripts in the following order:
-
-1. `00_import_raster_files.py`: Import downloaded raster files
-2. `01_make_grid.py`: Create analysis grid
-3. `02_make_buildings.py`: Extract buildings
-4. `03_make_pervius_1.py`: Pervious surfaces analysis (part 1)
-5. `04_make_pervius_2.py`: Pervious surfaces analysis (part 2)
-6. `05_make_dtm.py`: Generate digital terrain model
-7. `05_median_distance.py`: Calculate median distances
-8. `05_mediana_altezze.py`: Calculate median heights
-9. `06_make_h.py`: Calculate height of roughness elements
-10. `07_aspect_ratio.py`: Calculate aspect ratio
-11. `08_refine_albedo.py`: Refine albedo values
-12. `09_rmsep.py`: Calculate and classify LCZs
+1. `01_merge_fetch_files.py`: Merges downloaded files
+2. `02_import_raster_files.py`: Imports raster files into the project
+3. `03_make_grid.py`: Creates analysis grid
+4. `04_make_buildings.py`: Extracts buildings
+5. `05_make_pervius_1.py`: Pervious surfaces analysis (part 1)
+6. `06_make_pervius_2.py`: Pervious surfaces analysis (part 2)
+7. `07_make_dtm.py`: Generates digital terrain model
+8. `08_make_dist.py`: Calculates distances
+9. `09_median_distance.py`: Calculates median distances
+10. `10_mediana_altezze.py`: Calculates median heights
+11. `11_make_h.py`: Calculates height of roughness elements
+12. `12_aspect_ratio.py`: Calculates aspect ratio
+13. `13_refine_albedo.py`: Refines albedo values
+14. `14_rmsep.py`: Calculates and classifies LCZs
 
 ## Project Structure
 
@@ -81,3 +82,46 @@ This project is distributed under the MIT license. See the `LICENSE` file for de
 - Google Solar API
 - QGIS Development Team
 - Leaflet.js and contributors
+
+## Data Acquisition Interface Details
+
+### Features
+- Interactive map interface using Leaflet.js
+- Automatic grid generation (195m x 195m tiles)
+- Batch download functionality for DSM, RGB, and mask files
+- Progress tracking for downloads
+- Automatic ZIP file creation
+- Built-in geocoding for location search
+
+### Technical Requirements
+- Modern web browser with JavaScript enabled
+- Active internet connection
+- Google Cloud Platform account with:
+  - Solar API enabled
+  - Valid API key with billing configured
+  - Sufficient quota for Solar API requests
+
+### Download Process
+1. The interface automatically divides the selected area into 195m x 195m tiles
+2. For each tile, three files are downloaded:
+   - DSM (Digital Surface Model)
+   - RGB (Aerial imagery)
+   - Mask (Building footprints)
+3. Files are named using the format:
+   - `dsm_[latitude]_[longitude].tif`
+   - `rgb_[latitude]_[longitude].tif`
+   - `mask_[latitude]_[longitude].tif`
+4. All files are automatically compressed into a single `tiles.zip` file
+
+### Browser Compatibility
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+
+### Data Usage Notes
+- Each tile requires 3 API calls
+- Approximate file sizes:
+  - DSM: ~2-3 MB per tile
+  - RGB: ~1-2 MB per tile
+  - Mask: ~0.5-1 MB per tile
